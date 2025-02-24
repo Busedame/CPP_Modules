@@ -11,7 +11,6 @@ This repository contains all the C++ modules that I did at 42 Berlin. It is a co
 - Printing to stdout and reading from stdin.
 - Private vs public attributes.
 - Trimming strings using `setw()`.
-- 
 
 ##
 
@@ -26,14 +25,17 @@ This repository contains all the C++ modules that I did at 42 Berlin. It is a co
 
 ### CPP_02
 
-- Integer/float conversions
-- Fixed point values
-- Orthodox canonical form
-- Overloads
+- Integer/float conversions.
+- Fixed point values.
+- Orthodox canonical form.
+- Overloads.
 
 ##
 
 ### CPP_03
+
+- Derived classes.
+- Class inheritance.
 
 ---
 
