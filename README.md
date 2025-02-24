@@ -40,10 +40,8 @@ This repository contains all the C++ modules that I did at 42 Berlin. It is a co
 ---
 
 ## 🧰 **Included Files**  
-- All the functions.
-- A `Makefile`.
-- A header file.
-- A test.c file with implementations of simple tests for each function.
+In each module:
+- All the exercises (containing Makefile, header file(s), source file(s)).
 
 ---
 
@@ -52,132 +50,23 @@ This repository contains all the C++ modules that I did at 42 Berlin. It is a co
 To get started, first clone the repository.
 This command will clone the repo, and move you to the right directory:
 ```bash
-git clone https://github.com/busedame/libft/ libft && cd libft
+git clone https://github.com/busedame/CPP_Modules/ CPP_Modules && cd CPP_Modules
 ```
 ---
 
 ## 🖥️ **How to Compile and Run**  
+For each of the exercises inside the modules (e.g. ex00 in CPP_00), there is a Makefile.
+Each exercise contains a different program.
 
-### 💻 **Linux**  
-1. **Compile the library**:  
-   Run the following command to compile the library:  
+1. **Compile the program**:  
+   Run the following command to compile the program:  
    ```bash
    make
-2. **Compile and run test**:
-   Run the tests using:  
+   ```
+2. **Run the program**:
+   Run the program using:
    ```bash
-   make test
+   ./<program_name_as_specified_in_Makefile>
+   ```
 
-### 🍏 **Mac**  
-Ran into some issues trying to compile on MacOS, but this seems to work:
-
-**Step 1**
-- Remove `#include <bsd/string.h>` from the header file.  
-- Remove the `-lbsd` flag from the `Makefile`.
-
-**Step 2**
-- **Compile the library or tests**  
-   Run either of the following commands:  
-   ```bash
-   make
-   make test
-
----
-
-## 🔗**Including Libft in your project**
-
-Ensure that you have both your main project and the `libft` library in the same directory or organized in separate directories. You will need the path to your `libft` directory to link it in the `Makefile`.
-
-- **In the header file**: Include `libft.h`
-
-- **In the Makefile**:
-
-  1. **Path to the libft project**:
-     ```makefile
-     LIBFT_PATH = <path_to_libft_directory>
-     ```
-
-  2. **Link the libft.a library**:
-     ```makefile
-     LIBFT = $(LIBFT_PATH)/libft.a
-     LIBS = -L$(LIBFT_PATH) -lft
-     ```
-
-  3. **Compile the project and link with libft**:
-     ```makefile
-     $(NAME): $(OBJ) $(LIBFT)
-         $(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LIBS)
-     ```
-
-  4. **Ensure that libft is compiled during the build process**:
-     ```makefile
-     $(LIBFT):
-         $(MAKE) -C $(LIBFT_PATH)
-     ```
-
-  5. **Clean up object files**:
-     ```makefile
-     clean:
-         rm -f $(OBJ)
-         $(MAKE) -C $(LIBFT_PATH) clean
-     ```
-
-  6. **Clean up everything (object files, executables, and libft.a)**:
-     ```makefile
-     fclean: clean
-         rm -f $(NAME)
-         $(MAKE) -C $(LIBFT_PATH) fclean
-     ```
-
-**Example of Makefile**:
-```bash
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
-OPTIONS = -c
-
-# Path to the libft project
-LIBFT_PATH = ./libft
-
-# Source files for your project
-SRC = src/main.c
-
-# Object files for your project
-OBJ = $(SRC:.c=.o)
-
-# Final executable name
-NAME = my_project
-
-# Link the libft.a library
-LIBFT = $(LIBFT_PATH)/libft.a
-LIBS = -L$(LIBFT_PATH) -lft
-
-# All: Compile both libft and your project
-all: $(NAME)
-
-$(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LIBS)
-
-# Compile .c files to .o object files
-%.o: %.c
-	$(CC) $(CFLAGS) $(OPTIONS) $< -o $@
-
-# Ensure that libft is compiled during the build process
-$(LIBFT):
-	$(MAKE) -C $(LIBFT_PATH)
-
-# Clean up object files
-clean:
-	rm -f $(OBJ)
-	$(MAKE) -C $(LIBFT_PATH) clean
-
-# Clean up everything (object files, executables, and libft.a)
-fclean: clean
-	rm -f $(NAME)
-	$(MAKE) -C $(LIBFT_PATH) fclean
-
-# Rebuild everything (clean and then compile both libft and your project)
-re: fclean all
-
-.PHONY: all clean fclean re
-```
-*This project was finished Nov 30th 2023.*
+*This project is still in progress.*
