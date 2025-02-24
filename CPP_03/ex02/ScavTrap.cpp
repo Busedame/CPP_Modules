@@ -135,7 +135,7 @@ void ScavTrap::beRepaired(unsigned int amount)
 	else if (!getEnergy())
 		std::cout << getName() << " can't repair themselves, because they have no energy left." << std::endl;
 	else if (amount > 100)
-		std::cerr << getName() << " feels too overwhelmed to repair themselves. It's simply too much. Please pass a repair value between 0 and 100." << std::endl;
+		std::cerr << getName() << "  feels too overwhelmed to repair themselves. It's simply too much. Please pass a repair value between 0 and 100." << std::endl;
 	else
 	{
 		if (getHealth() + amount > 100)

@@ -16,7 +16,10 @@ int main( void )
 	b.takeDamage(10); // Scavtrap ignores damage with shield active.
 	b.takeDamage(10); // Shield gets automatically deactivated. Scavtrap takes 10 dmg.
 	b.beRepaired(5); // Scavtrap repairs itself for 5 dmg.
-	b.takeDamage(50);
+	b.beRepaired(24122141); // Scavtrap can't deal with this large number.
+	b.beRepaired(-1); // Scavtrap doesn't like this negative number.
+	b.takeDamage(-1); // Scavtrap appreciates the help, but does not accept this negativity.
+	b.takeDamage(50); // Scavtrap takes 50 damage.
 	b.takeDamage(100); // Scavtrap takes 100 damage and gets defeated.
 	std::cout << b.getName() << " has " << b.getDmg() << " attack damage, " << b.getHealth() << " health and " << b.getEnergy() << " energy left." << std::endl;
 	return (0);

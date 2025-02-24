@@ -2,12 +2,12 @@
 
 ClapTrap::ClapTrap(std::string Name) : Name(Name), Health(10), Energy(10), Dmg(0)
 {
-	std::cout << "Constructor for " << Name << " has been called." << std::endl;
+	std::cout << "Claptrap constructor for " << Name << " has been called." << std::endl;
 }
 
 ClapTrap::ClapTrap(std::string Name, unsigned int Health, unsigned int Energy, unsigned int Dmg) : Name(Name), Health(Health), Energy(Energy), Dmg(Dmg)
 {
-	std::cout << "Superconstructor for " << Name << " has been called." << std::endl;
+	std::cout << "Claptrap superconstructor for " << Name << " has been called." << std::endl;
 }
 
 ClapTrap::ClapTrap(const ClapTrap &Original)
@@ -36,6 +36,7 @@ ClapTrap::~ClapTrap()
 
 void ClapTrap::attack(const std::string& target)
 {
+	std::cout << "Claptrap ";
 	if (!Health)
 		std::cout << Name << " is dead and can't attack." << std::endl;
 	else if (!Energy)
@@ -49,6 +50,15 @@ void ClapTrap::attack(const std::string& target)
 
 void ClapTrap::takeDamage(unsigned int amount)
 {
+	int	Test;
+
+	Test = amount;
+	std::cout << "Claptrap ";
+	if (Test < 0)
+	{
+		std::cout << getName() << " says: 'Hey, someone tried to help us by passing a negative value! Please pass a value greater than 0." << std::endl;
+		return ;
+	}
 	if (!Health)
 		std::cout << Name << " can't take more damage cause they're already dead. Do you have no empathy?" << std::endl;
 	else
@@ -68,10 +78,18 @@ void ClapTrap::takeDamage(unsigned int amount)
 
 void ClapTrap::beRepaired(unsigned int amount)
 {
+	int	Test;
+
+	Test = amount;
+	std::cout << "Claptrap ";
+	if (Test < 0)
+		std::cout << Name << " says: 'Hey, someone sent a negative value! Repair value can only be between 0 and 10." << std::endl;
 	if (!Health)
 		std::cout << Name << " can't repair themselves, because they're already dead." << std::endl;
 	else if (!Energy)
 		std::cout << Name << " can't repair themselves, because they have no energy left." << std::endl;
+	else if (amount > 10)
+		std::cerr << Name << " feels too overwhelmed to repair themselves. It's simply too much. Please pass a repair value between 0 and 10." << std::endl;
 	else
 	{
 		if (Health + amount > 10)

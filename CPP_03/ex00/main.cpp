@@ -12,8 +12,10 @@ int main( void )
 	a.beRepaired(10);
 	a.beRepaired(10);
 	a.takeDamage(5);
-	a.takeDamage(5);
-	a.beRepaired(10);
+	a.beRepaired(2003242324);
+	a.beRepaired(-1);
+	a.takeDamage(-1);
+	a.takeDamage(20420414);
 	a.attack("Solfrid");
 	return 0;
 }
