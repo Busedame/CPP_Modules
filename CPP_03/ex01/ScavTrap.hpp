@@ -26,7 +26,6 @@ class	ScavTrap : public ClapTrap
 		void beRepaired(unsigned int amount);
 	private:
 		bool	Shield;
-		int		ShieldCount;
 };
 
 #endif
