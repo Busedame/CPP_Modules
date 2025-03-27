@@ -1,13 +1,13 @@
 #include "ClapTrap.hpp"
 
-ClapTrap::ClapTrap(std::string Name) : Name(Name), Health(10), Energy(10), Dmg(0)
+ClapTrap::ClapTrap(std::string Name) : Name(Name), Health(10), Energy(10), Dmg(0), MaxHealth(10)
 {
-	std::cout << "Constructor for " << Name << " has been called." << std::endl;
+	std::cout << "Claptrap constructor for " << Name << " has been called." << std::endl;
 }
 
 ClapTrap::ClapTrap(const ClapTrap &Original)
 {
-	std::cout << "Copy constructor called." << std::endl;
+	std::cout << "Claptrap copy constructor called." << std::endl;
 	*this = Original; // Creates a new object that is a copy of the original object.
 }
 
@@ -19,14 +19,15 @@ ClapTrap &ClapTrap::operator=(const ClapTrap &Original)
 		Health = Original.Health;
 		Energy = Original.Energy;
 		Dmg = Original.Dmg;
+		MaxHealth = Original.MaxHealth;
 	}
-	std::cout << "Copy assignment operator called." << std::endl;
+	std::cout << "Claptrap copy assignment operator called." << std::endl;
 	return (*this);
 }
 
 ClapTrap::~ClapTrap()
 {
-	std::cout << "Destructor for " << Name << " has been called." << std::endl;
+	std::cout << "Claptrap destructor for " << Name << " has been called." << std::endl;
 }
 
 void ClapTrap::attack(const std::string& target)
@@ -49,7 +50,7 @@ void ClapTrap::takeDamage(unsigned int amount)
 	Test = amount;
 	if (Test < 0)
 	{
-		std::cout << Name << " says: 'Hey, someone tried to help us by passing a negative value! Please pass a value greater than 0." << std::endl;
+		std::cout << getName() << " says: 'Please attack me with a positive value.'" << std::endl;
 		return ;
 	}
 	if (!Health)
@@ -75,19 +76,17 @@ void ClapTrap::beRepaired(unsigned int amount)
 
 	Test = amount;
 	if (Test < 0)
-		std::cout << Name << " says: 'Hey, someone sent a negative value! Repair value can only be between 0 and 10." << std::endl;
+		std::cout << Name << " says: 'Hey, someone sent a negative value! Repair value must be positive." << std::endl;
 	else if (!Health)
 		std::cout << Name << " can't repair themselves, because they're already dead." << std::endl;
 	else if (!Energy)
 		std::cout << Name << " can't repair themselves, because they have no energy left." << std::endl;
-	else if (amount > 10)
-		std::cerr << Name << " feels too overwhelmed to repair themselves. It's simply too much. Please pass a repair value between 0 and 10." << std::endl;
 	else
 	{
-		if (Health + amount > 10)
+		if (amount + Health > MaxHealth)
 		{
-			std::cout << Name << " repairs itself, and restores " << 10 - Health << " health." << std::endl;
-			Health = 10;
+			std::cout << Name << " repairs itself, and restores " << MaxHealth - Health << " health." << std::endl;
+			Health = MaxHealth;
 		}
 		else
 		{
@@ -96,4 +95,48 @@ void ClapTrap::beRepaired(unsigned int amount)
 		}
 		Energy -= 1;
 	}
+}
+
+std::string ClapTrap::getName(void)
+{
+	return (Name);
+}
+unsigned int ClapTrap::getHealth(void)
+{
+	return (Health);
+}
+
+unsigned int ClapTrap::getEnergy(void)
+{
+	return (Energy);
+}
+
+unsigned int ClapTrap::getDmg(void)
+{
+	return (Dmg);
+}
+
+unsigned int ClapTrap::getMaxHealth(void)
+{
+	return (MaxHealth);
+}
+
+void ClapTrap::setHealth(unsigned int newHealth)
+{
+	Health = newHealth;
+}
+
+void ClapTrap::setEnergy(unsigned int newEnergy)
+{
+	Energy = newEnergy;
+}
+
+void ClapTrap::setDmg(unsigned int newDmg)
+{
+	Dmg = newDmg;
+}
+
+void ClapTrap::setMaxHealth(unsigned int newMax)
+{
+	MaxHealth = newMax;
 }
