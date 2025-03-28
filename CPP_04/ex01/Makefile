@@ -5,9 +5,8 @@ SRC =	main.cpp \
 		Animal.cpp \
 		Cat.cpp \
 		Dog.cpp \
-		WrongCat.cpp \
-		WrongAnimal.cpp
-NAME = animalsounds
+		Brain.cpp
+NAME = animalswithbrains
 OBJ = $(SRC:.cpp=.o)
 
 all: $(NAME)
@@ -15,7 +14,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 	@echo "\033[0;32m🎉COMPILATION SUCCESS🥳\033[0m"
-	@echo "\033[0;33mUsage: Usage: Run ./animalsounds.\033[0m"
+	@echo "\033[0;33mUsage: Usage: Run ./animalswithbrains.\033[0m"
 
 %.o: %.cpp
 	@$(CC) $(CFLAGS) -c $< -o $@
