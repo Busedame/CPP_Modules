@@ -26,17 +26,7 @@ WrongAnimal::~WrongAnimal()
 
 void	WrongAnimal::makeSound(void) const
 {
-	if (type == "WrongCat")
-		std::cout << "The " << type << " says 'bark'." << std::endl;
-	else if (type == "WrongDog")
-		std::cout << "The " << type << " says 'meow'." << std::endl;
-	else
-		std::cout << "The Animal says 'wikiwako'." << std::endl;
-}
-
-void	WrongAnimal::setType(std::string newtype)
-{
-	type = newtype;
+	std::cout << "*undefined wrong animal sound*" << std::endl;
 }
 
 std::string	WrongAnimal::getType (void) const

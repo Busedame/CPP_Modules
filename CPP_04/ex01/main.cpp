@@ -3,23 +3,18 @@
 
 int	main()
 {
-	// const Animal* meta = new Animal();
-	// const Animal* cat = new Cat();
-	// const Animal* dog = new Dog();
-	// std::cout << cat->getType() << " " << std::endl;
-	// std::cout << dog->getType() << " " << std::endl;
-	// meta->makeSound();
-	// cat->makeSound(); //will output the cat sound!
-	// dog->makeSound(); //will output the dog sound!
-	// cat->getIdeas();
-	// delete meta;
-	// delete cat;
-	// delete dog;
+	const Animal* animals[10];
+	for (int i = 0; i < 5; i++)
+		animals[i] = new Cat();
+	for (int i = 5; i < 10; i++)
+		animals[i] = new Dog();
+	for (int i = 0; i < 10; i++)
+		animals[i]->makeSound();
+	for (int i = 0; i < 10; i++)
+		delete animals[i];
 
-	Cat	test;
-	test.makeSound();
-	test.setIdea(0, "Maybe I can break this...");
-	test.setIdea(1, "I like fish...");
-	test.getIdeas();
-	return (0);
+	Cat cat;
+	cat.setIdea(0, "I like ice cream");
+	Cat cat2 = cat;
+	cat2.getIdeas();
 }

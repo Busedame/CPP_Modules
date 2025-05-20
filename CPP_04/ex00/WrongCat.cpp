@@ -2,7 +2,7 @@
 
 WrongCat::WrongCat() : WrongAnimal()
 {
-	setType("WrongCat");
+	type = "WrongCat";
 	std::cout << "WrongCat constructor called" << std::endl;
 }
 
@@ -23,4 +23,9 @@ WrongCat &WrongCat::operator=(const WrongCat &Original)
 WrongCat::~WrongCat()
 {
 	std::cout << "WrongCat destructor called" << std::endl;
+}
+
+void	WrongCat::makeSound(void) const
+{
+	std::cout << "meo....bark" << std::endl;
 }

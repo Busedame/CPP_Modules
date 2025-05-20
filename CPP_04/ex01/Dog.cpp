@@ -2,7 +2,7 @@
 
 Dog::Dog() : Animal()
 {
-	setType("Dog");
+	type = "Dog";
 	brain = new Brain();
 	std::cout << "Dog constructor called" << std::endl;
 }
@@ -27,16 +27,21 @@ Dog::~Dog()
 	std::cout << "Dog destructor called" << std::endl;
 }
 
+void	Dog::makeSound(void) const
+{
+	std::cout << "bark bark" << std::endl;
+}
+
 void	Dog::getIdeas(void)
 {
 	for (int i = 0; i < 100; i++)
-		std::cout << "Idea " << i + 1 << ": '" << brain->ideas[i] << "'" << std::endl;
+		std::cout << "Idea " << i + 1 << ": '" << ideas[i] << "'" << std::endl;
 }
 
 void	Dog::setIdea(int Nbr, std::string newIdea)
 {
 	if (Nbr >= 0 && Nbr < 100)
-		brain->ideas[Nbr] = newIdea;
+		ideas[Nbr] = newIdea;
 	else
 		std::cout << "Idea number must be between 0 and 99." << std::endl;
 }

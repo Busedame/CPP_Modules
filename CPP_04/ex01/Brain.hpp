@@ -8,7 +8,8 @@ class Brain
 		Brain();
 		Brain(const Brain &Original);
 		Brain &operator=(const Brain &Original);
-		~Brain();
+		virtual ~Brain();
+	protected:
 		std::string	ideas[100];
 };
 
