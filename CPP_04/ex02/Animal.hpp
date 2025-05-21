@@ -5,15 +5,15 @@
 class Animal
 {
 	public:
+		Animal();
+		Animal(std::string newtype);
 		Animal(const Animal &Original);
 		Animal &operator=(const Animal &Original);
 		virtual ~Animal();
-		virtual void	makeSound(void) const;
+		virtual void	makeSound(void) const = 0;
 		std::string	getType(void) const;
 	protected:
 		std::string type;
-		Animal();
-		Animal(std::string newtype);
 };
 
 #endif
