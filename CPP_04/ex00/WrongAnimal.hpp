@@ -6,6 +6,7 @@ class WrongAnimal
 {
 	public:
 		WrongAnimal();
+		WrongAnimal(std::string newtype);
 		WrongAnimal(const WrongAnimal &Original);
 		WrongAnimal &operator=(const WrongAnimal &Original);
 		virtual ~WrongAnimal();

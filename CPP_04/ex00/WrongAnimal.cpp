@@ -5,9 +5,14 @@ WrongAnimal::WrongAnimal() : type("")
 	std::cout << "WrongAnimal constructor called" << std::endl;
 }
 
-WrongAnimal::WrongAnimal(const WrongAnimal &Original)
+WrongAnimal::WrongAnimal(std::string newtype)
 {
-	*this = Original;
+	type = newtype;
+	std::cout << "WrongAnimal constructor called" << std::endl;
+}
+
+WrongAnimal::WrongAnimal(const WrongAnimal &Original) : type(Original.type)
+{
 	std::cout << "WrongAnimal copy constructor called" << std::endl;
 }
 

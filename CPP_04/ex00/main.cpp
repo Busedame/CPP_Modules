@@ -4,16 +4,24 @@
 
 int	main()
 {
-	// Demonstrating how cat derives from animal.
-	const Animal* animal = new Animal();
-	const Cat* cat = new Cat();
+	// // Demonstrating copy and copy assignment constructors.
+	// Cat *cat = new Cat();
+	// Cat cat2(*cat);
+	// // Cat cat2;
+	// // cat2 = *cat;
+	// std::cout << cat2.getType() << std::endl;
+	// delete cat;
 
-	animal->makeSound();
-	cat->makeSound();
-	delete animal;
-	animal = cat;
-	animal->makeSound();
-	delete cat;
+	// // Demonstrating how cat derives from animal.
+	// const Animal* animal = new Animal();
+	// const Cat* cat = new Cat();
+
+	// animal->makeSound();
+	// cat->makeSound();
+	// delete animal;
+	// animal = cat;
+	// animal->makeSound();
+	// delete cat;
 
 	// Demonstrating all animals -> change to Wrong-classes for testing.
 	const Animal* meta = new Animal();

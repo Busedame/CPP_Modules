@@ -6,7 +6,7 @@ SRC =	main.cpp \
 		Cat.cpp \
 		Dog.cpp \
 		Brain.cpp
-NAME = animalswithbrains
+NAME = non_instantiable
 OBJ = $(SRC:.cpp=.o)
 
 all: $(NAME)
@@ -14,7 +14,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 	@echo "\033[0;32m🎉COMPILATION SUCCESS🥳\033[0m"
-	@echo "\033[0;33mUsage: Usage: Run ./animalswithbrains.\033[0m"
+	@echo "\033[0;33mUsage: Usage: Run ./non_instantiable.\033[0m"
 
 %.o: %.cpp
 	@$(CC) $(CFLAGS) -c $< -o $@
