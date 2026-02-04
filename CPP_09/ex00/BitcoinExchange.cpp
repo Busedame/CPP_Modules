@@ -110,12 +110,12 @@ int	BitcoinExchange::checkValue(std::string& valueStr, std::string& file, int li
 				continue ;
 			}
 			else {
-				std::cerr << "Error: " << file << " => bad input in line " << lineIndex << ": '" << line << "' Value wrongly formatted, found several dots." << std::endl;
+				std::cerr << "Error: " << file << " => bad input in line " << lineIndex << ": '" << line << "' Value wrongly formatted." << std::endl;
 				return 1;
 			}
 		}
 		if (!isdigit(valueStr[i])) {
-			std::cerr << "Error: " << file << " => bad input in line " << lineIndex << ": '" << line << "' Value wrongly formatted, found non-numerical characters." << std::endl;
+			std::cerr << "Error: " << file << " => bad input in line " << lineIndex << ": '" << line << "' Value wrongly formatted." << std::endl;
 			return 1;
 		}
 		i++;
@@ -281,8 +281,17 @@ void	BitcoinExchange::setCsvData(std::string date, double value) {
 ====== OUTSIDE CLASS UTILS =======
 */
 
-bool isSpace(char c) {
-    return std::isspace(static_cast<unsigned char>(c));
+std::string	trim(const std::string& str)
+{
+	size_t start = 0;
+	size_t end = str.length();
+
+	while (start < end && std::isspace(static_cast<unsigned char>(str[start])))
+		start++;
+	while (end > start && std::isspace(static_cast<unsigned char>(str[end - 1])))
+		end--;
+
+	return str.substr(start, end - start);
 }
 
 std::vector<std::string> split(const std::string& str, char delimiter)
@@ -292,11 +301,9 @@ std::vector<std::string> split(const std::string& str, char delimiter)
 	std::string item;
 
 	while (std::getline(ss, item, delimiter)) {
-		// Remove spaces
-		item.erase(std::remove_if(item.begin(), item.end(), isSpace), item.end());
 
 		// Add item to tokens
-		tokens.push_back(item);
+		tokens.push_back(trim(item));
 	}
 
 	return tokens;

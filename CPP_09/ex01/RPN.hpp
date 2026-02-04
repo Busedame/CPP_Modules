@@ -9,6 +9,10 @@
 class	RPN {
 	private:
 		std::stack<int> stack;
+
+		bool	isOperator(char c);
+		int		doEquation(char c);
+
 	public:
 		RPN();
 		RPN(const RPN& oth);
@@ -16,9 +20,6 @@ class	RPN {
 		~RPN();
 
 		int	run(const std::string& input);
-
-		bool	isOperator(char c);
-		int		handleOperator(char c);
 };
 
 // Outside class utils

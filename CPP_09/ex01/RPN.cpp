@@ -18,17 +18,22 @@ RPN::~RPN() {}
 */
 
 // Handles equation
-int	RPN::handleOperator(char c) {
+int	RPN::doEquation(char c) {
+
+	// If two numbers are not present, equation is not possible.
 	if (stack.size() < 2)
 		return 1;
 
+	// Store the two top numbers in the stack and pop them from stack.
 	int first = stack.top();
 	stack.pop();
 	int second = stack.top();
 	stack.pop();
 
+	// To store result.
 	int result;
 
+	// Find correct operator, do equation and store in result.
 	switch (c)
 	{
 		case '+':
@@ -47,7 +52,9 @@ int	RPN::handleOperator(char c) {
 			break;
 	}
 
+	// Push result to stack
 	stack.push(result);
+
 	return 0;
 }
 
@@ -59,26 +66,36 @@ int	RPN::run(const std::string& input) {
 	std::vector<std::string> tokens = split(input, ' ');
 
 	for (size_t i = 0; i < tokens.size(); i++) {
+
+		// If token contains more than one character, throw an error.
 		if (tokens[i].size() != 1) {
 			std::cerr << "Error" << std::endl;
 			return 1;
 		}
+
+		// Handles operand and operator - and if neither of these -> throw an error.
 		if (isdigit(tokens[i][0])) {
-			stack.push(static_cast<int>(atol(tokens[i].c_str())));
+			stack.push(tokens[i][0] - '0');
 		}
-		if (isOperator(tokens[i][0])) {
-			if (handleOperator(tokens[i][0])) {
+		else if (isOperator(tokens[i][0])) {
+			if (doEquation(tokens[i][0])) {
 				std::cerr << "Error" << std::endl;
 				return 1;
 			}
 		}
+		else {
+			std::cerr << "Error" << std::endl;
+			return 1;
+		}
 	}
 
+	// Stack should only contain one number by the end.
 	if (stack.size() != 1) {
-		std::cout << "Error" << std::endl;
+		std::cerr << "Error" << std::endl;
 		return 1;
 	}
 
+	// Print out the number remaining in the stack
 	std::cout << stack.top() << std::endl;
 
 	return 0;
@@ -112,7 +129,8 @@ std::vector<std::string> split(const std::string& str, char delimiter)
 		item.erase(std::remove_if(item.begin(), item.end(), isSpace), item.end());
 
 		// Add item to tokens
-		tokens.push_back(item);
+		if (!item.empty())
+			tokens.push_back(item);
 	}
 
 	return tokens;

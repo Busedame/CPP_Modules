@@ -44,7 +44,7 @@ class BitcoinExchange
 };
 
 // Outside class utils
-bool isSpace(char c);
+std::string	trim(const std::string& str);
 std::vector<std::string> split(const std::string& str, char delimiter);
 
 #endif
