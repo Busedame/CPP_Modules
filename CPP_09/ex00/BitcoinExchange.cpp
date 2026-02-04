@@ -88,6 +88,7 @@ int	BitcoinExchange::checkValue(std::string& valueStr, std::string& file, int li
 {
 	int		i = 0;
 	bool	dotFound = false;
+	bool	digitFound = false;
 
 	// If first character is anything else than '.'
 	if (!isdigit(valueStr[i]) && valueStr[i] != '.') {
@@ -114,11 +115,18 @@ int	BitcoinExchange::checkValue(std::string& valueStr, std::string& file, int li
 				return 1;
 			}
 		}
-		if (!isdigit(valueStr[i])) {
+		else if (!isdigit(valueStr[i])) {
 			std::cerr << "Error: " << file << " => bad input in line " << lineIndex << ": '" << line << "' Value wrongly formatted." << std::endl;
 			return 1;
 		}
+		if (!digitFound)
+			digitFound = true;
 		i++;
+	}
+
+	if (!digitFound) {
+		std::cerr << "Error: " << file << " => bad input in line " << lineIndex << ": '" << line << "' Value contains no digits." << std::endl;
+		return 1;
 	}
 
 	// Converting value to see if it is bigger than 1000 (not allowed in input file).
