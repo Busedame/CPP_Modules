@@ -14,11 +14,11 @@ RPN& RPN::operator=(const RPN& oth) {
 RPN::~RPN() {}
 
 /*
-====== EQUATION LOGIC =======
+====== OPERATOR LOGIC =======
 */
 
-// Handles equation
-int	RPN::doEquation(char c) {
+// Applies operator to the top two operands on the stack
+int	RPN::applyOperator(char c) {
 
 	// If two numbers are not present, equation is not possible.
 	if (stack.size() < 2)
@@ -78,7 +78,7 @@ int	RPN::run(const std::string& input) {
 			stack.push(tokens[i][0] - '0');
 		}
 		else if (isOperator(tokens[i][0])) {
-			if (doEquation(tokens[i][0])) {
+			if (applyOperator(tokens[i][0])) {
 				std::cerr << "Error" << std::endl;
 				return 1;
 			}

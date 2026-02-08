@@ -111,12 +111,12 @@ int	BitcoinExchange::checkValue(std::string& valueStr, std::string& file, int li
 				continue ;
 			}
 			else {
-				std::cerr << "Error: " << file << " => bad input in line " << lineIndex << ": '" << line << "' Value wrongly formatted." << std::endl;
+				std::cerr << "Error: " << file << " => bad input in line " << lineIndex << ": '" << line << "' Value wrongly formatted. Several dots found." << std::endl;
 				return 1;
 			}
 		}
 		else if (!isdigit(valueStr[i])) {
-			std::cerr << "Error: " << file << " => bad input in line " << lineIndex << ": '" << line << "' Value wrongly formatted." << std::endl;
+			std::cerr << "Error: " << file << " => bad input in line " << lineIndex << ": '" << line << "' Value wrongly formatted. Non-numerical characters found." << std::endl;
 			return 1;
 		}
 		if (!digitFound)

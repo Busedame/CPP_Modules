@@ -11,7 +11,7 @@ class	RPN {
 		std::stack<int> stack;
 
 		bool	isOperator(char c);
-		int		doEquation(char c);
+		int		applyOperator(char c);
 
 	public:
 		RPN();
