@@ -64,6 +64,9 @@ void PmergeMe::mergeInsertSortVector(int argc, char **argv, int& numCmpVec)
 		std::vector<int> mainChain;
 		std::vector<int> pending;
 		std::vector<int> leftover;
+	
+		std::cout << "RECURSION LEVEL: " << recLvl << std::endl;
+		std::cout << std::endl;
 
 		for (size_t i = 0; i < tmp.size(); ++i)
 		{
@@ -77,19 +80,21 @@ void PmergeMe::mergeInsertSortVector(int argc, char **argv, int& numCmpVec)
 
 		// Merge and keep track of where each chain is located.
 		int posPending = mainChain.size();
+
+
+		if (!pending.empty())
+			insertPendingIntoMain(mainChain, pending, blockSize);
+
+	
 		mainChain.insert(mainChain.end(), pending.begin(), pending.end()); // merge main-chain + pending
 		//int	posLeftovers = posPending + pending.size();
 		mainChain.insert(mainChain.end(), leftover.begin(), leftover.end()); // merge main-chain + pending + leftovers
-
-
-		tmp = mainChain; // Reassign vec
-
     	// Step 3: insert each pending block into main (Jacobsthal order)
     	//insertPendingJacobsthal(mainChain, pending);
+	
+		tmp = mainChain; // Reassign vec
 
 		// DEBUG PRINT START //
-		std::cout << "RECURSION LEVEL: " << recLvl << std::endl;
-		std::cout << std::endl;
 		std::cout << "Main: " << std::endl;
 		for (int i = 0; i < posPending; i++){
 			std::cout << tmp[i] << " ";
@@ -116,40 +121,73 @@ void PmergeMe::mergeInsertSortVector(int argc, char **argv, int& numCmpVec)
 		std::cout << std::endl;
 		// DEBUG PRINT END //
 
-		if (!pending.empty())
-			insertPendingIntoMain(mainChain, pending, blockSize);
-
     	recLvl--;
 	}
 
 }
 
 void	PmergeMe::insertPendingIntoMain(std::vector<int>& mainChain, std::vector<int>& pending, int blockSize) {
-	int	blockAmount = pending.size() / blockSize;
-	std::vector<size_t> jacSequence = jacobsthalIndices(blockAmount + 1);
-	std::cout << "Block amount: " << blockAmount << std::endl; // DEBUG
-	int mainChainsize = mainChain.size(); // DEBUG
-	std::cout << mainChainsize << std::endl; // DEBUG
+	int	blockAmountInPending = pending.size() / blockSize;
+	int	blockAmountInMain = mainChain.size() / blockSize;
+	std::vector<size_t> jacSequence = jacobsthalIndices(blockAmountInPending + 1);
 
-	if (!jacSequence.empty()) { // DEBUG
-		std::cout << "JACOBSTHAL: " << jacSequence[0] << std::endl; // DEBUG
-		std::cout << "JACOBSTHAL: " << jacSequence[1] << std::endl; // DEBUG
-	} // DEBUG
+	std::cout << "Current blocksize: " << blockSize << std::endl;
+	std::cout << "BlockAmount in main: " << blockAmountInMain << std::endl;
+	std::cout << "BlockAmount in pending: " << blockAmountInPending << std::endl;
+	
+	size_t	k; // First Jacobsthal (3 or 1)
+	size_t	jacSequencePair; // Which block (always b3 or b2), so either position 0 or 1.
 
-	size_t prevJacNbr = 1; // This would be b1.
-	while (blockAmount > 0) {
-		for (long unsigned int i = 0; i < jacSequence.size(); i++) {
-			int	currJacNbr = jacSequence[i];
-			for (size_t i = currJacNbr; i > prevJacNbr; i--) {
-				int blockStart = pending.size() - blockSize * i - 1;
-				int blockEnd = pending.size() - i - 1;
-				std::cout << blockStart << std::endl;
-				std::cout << blockEnd << std::endl;
-			}
-			prevJacNbr = currJacNbr;
-		}
-		blockAmount--;
+	if (!jacSequence.empty()) { // If Jacobsthal is 3 (it is two ore more blocks present), set k to 3 and corresponding position to 1 (second).
+		k = jacSequence.front();
+		jacSequencePair = k - 2;
 	}
+
+	else { // If Jacobsthal is 1 (if only one block is present), set k to 1 and corresponding position to 0.
+		k = 1;
+		jacSequencePair = 0;
+	}
+	std::cout << "First Jacobsthal (k): " << k << std::endl;
+
+	std::cout << "Jacobsthal sequence pair: " << jacSequencePair << std::endl;
+
+	size_t	jacPairStart = blockSize * jacSequencePair;
+	size_t	jacPairEnd = blockSize * jacSequencePair + blockSize - 1;
+	std::cout << "Which position does first Jacobsthal number start: (b3): " << jacPairStart << std::endl;
+	std::cout << "Which position does first Jacobsthal number end: (b3): " << jacPairEnd << std::endl;
+	std::cout << "The start position value: (b3): " << pending[jacPairStart] << std::endl;
+	std::cout << "The end position value: (b3): " << pending[jacPairEnd] << std::endl;
+
+	/*
+	size_t	prevJac = 1;
+	size_t	currJac = ;
+	for (long unsigned int i = 0; i < jacSequence.size(); i++)
+	{
+		currJac = jacSequence[i];
+
+	}
+	for (long unsigned int i = 0; i < k; i++)
+	{
+		
+	}
+	*/
+
+	// The pending and main are correct
+	/**
+	 * RECURSION LEVEL: 3
+
+	BlockAmount in main: 3
+	BlockAmount in pending: 2
+	Main:		[b1, a1, a2]
+	6 15 8 16 2 11 0 17 3 10 1 21 
+	Pending: 	[b2, b3]
+	9 18 14 19 5 12 4 20 
+	Leftovers: 
+	7 13 
+	Whole string: 
+	6 15 8 16 2 11 0 17 3 10 1 21 9 18 14 19 5 12 4 20 7 13 
+
+	 */
 }
 
 int PmergeMe::mergeInsertSortVectorRecursive(std::vector<int> &tmp, int recursionLvl, int& nmbCmpVec)
