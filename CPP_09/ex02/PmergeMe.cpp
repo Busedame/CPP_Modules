@@ -31,22 +31,6 @@ PmergeMe& PmergeMe::operator=(const PmergeMe& oth) {
 PmergeMe::~PmergeMe() {}
 
 /*
-====== STORE INPUT =======
-*/
-
-void	PmergeMe::storeInputVec(int argc, char **argv)
-{
-	for (int i = 1; i < argc; i++)
-		vec.push_back(std::atoi(argv[i]));
-}
-
-void	PmergeMe::storeInputDeq(int argc, char **argv)
-{
-	for (int i = 1; i < argc; i++)
-		deq.push_back(std::atoi(argv[i]));
-}
-
-/*
 ====== VEC SORT =======
 */
 
@@ -59,7 +43,7 @@ void	PmergeMe::storeInputDeq(int argc, char **argv)
 void PmergeMe::mergeInsertSortVector(int argc, char **argv, int& numCmpVec)
 {
 	// 1. Store input in vector
-	storeInputVec(argc, argv);
+	storeInputVec(argc, argv, vec);
 
 	// 2. If true, there is nothing to sort
 	if (vec.size() <= 1)
@@ -168,25 +152,6 @@ void	PmergeMe::insertPendingIntoMain(std::vector<int>& mainChain, std::vector<in
 	}
 }
 
-int	PmergeMe::organizeChains(int index, int blockSize, int totalSize)
-{
-	int	blockNum = index / blockSize;  // which block does this element belong to
-
-	// leftover -> not main chain
-	if ((blockNum + 1) * blockSize > totalSize)
-		return 2;
-
-	// main chain: odd-numbered blocks (a-blocks)
-	if (blockNum % 2 == 1)
-		return 0;
-	
-	// main chain: smallest block (b1)
-	if (index >= 0 && index <= blockSize)
-		return 0;
-
-	return 1;	// pending: all remaning b blocks (b2, b3, etc)
-}
-
 int PmergeMe::mergeInsertSortVectorRecursive(std::vector<int> &tmp, int recursionLvl, int& nmbCmpVec)
 {
     int blockSize = 1 << (recursionLvl - 1);        // 2^(recursionLvl-1)
@@ -239,75 +204,11 @@ void PmergeMe::insertIntoVector(std::vector<int> &sorted, int value)
 	sorted.insert(it, value);
 }
 
-/*
-====== DEQUE SORT =======
-*/
-
-/*
-====== PARSE AND STORE INPUT =======
-*/
-int PmergeMe::parseInput(int argc, char **argv)
-{
-    std::vector<int> tmp;
-    for (int arg = 1; arg < argc; arg++) {
-        char* str = argv[arg];
-
-        for (int i = 0; str[i] != '\0'; i++) {
-            if (str[i] < '0' || str[i] > '9') {
-                std::cerr << "Error" << std::endl;
-                return 1;
-            }
-        }
-
-        long l = atol(str);
-        if (l > INT_MAX || l < INT_MIN) {
-            std::cerr << "Error" << std::endl;
-            return 1;
-        }
-
-        int num = static_cast<int>(l);
-
-        if (std::find(tmp.begin(), tmp.end(), num) != tmp.end()) {
-            std::cerr << "Error" << std::endl;
-            return 1;
-        }
-
-        tmp.push_back(num);
-    }
-    return 0;
-}
-
-
-/*
-====== PRINTING =======
-*/
-void PmergeMe::printVec(void)
-{
-	std::cout << "After:\t";
-	for (long unsigned int i = 0; i < vec.size(); i++)
-		std::cout << vec[i] << " ";
-	std::cout << std::endl;
-}
-
-void PmergeMe::printDeq(void)
-{
-	std::cout << "After:\t";
-	for (long unsigned int i = 0; i < deq.size(); i++)
-		std::cout << deq[i] << " ";
-	std::cout << std::endl;
-}
-
-void PmergeMe::printUnsorted(int argc, char **argv)
-{
-	std::cout << "Before:\t";
-	for (int i = 1; i < argc; i++)
-		std::cout << argv[i] << " ";
-	std::cout << std::endl;
-}
 
 /*
 ====== MAIN ENTRYPOINT =======
 */
+
 int	PmergeMe::entryPoint(int argc, char **argv)
 {
 	// Parse and store input
@@ -330,7 +231,7 @@ int	PmergeMe::entryPoint(int argc, char **argv)
 
 	// Print sorted sequence from vec and deq
 	printUnsorted(argc, argv);
-	printVec();
+	printVec(vec);
 
 	// Calculate time spent for vec and deq
 	double duration_vec = static_cast<double>(end_vec - start_vec) / CLOCKS_PER_SEC * 1e6;

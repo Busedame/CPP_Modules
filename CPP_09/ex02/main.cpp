@@ -7,9 +7,9 @@ int	main(int argc, char **argv)
 		return 1;
 	}
 
-	PmergeMe pmm;
+	PmergeMe sort;
 
-	if (pmm.entryPoint(argc, argv))
+	if (sort.entryPoint(argc, argv))
 		return 1;
 
 	return 0;

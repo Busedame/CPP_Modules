@@ -3,7 +3,8 @@ CFLAGS = -Wall -Wextra -Werror -std=c++98 -g -DDEBUG
 OPTIONS = -c
 SRC =	main.cpp \
 		PmergeMe.cpp \
-		debug.cpp
+		debug.cpp \
+		PmergeMeUtils.cpp
 NAME = PmergeMe
 OBJ = $(SRC:.cpp=.o)
 
