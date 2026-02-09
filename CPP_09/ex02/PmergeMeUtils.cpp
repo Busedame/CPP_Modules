@@ -85,31 +85,22 @@ void	storeInputDeq(int argc, char **argv, std::deque<int>& deq)
 
 int	organizeChains(int index, int blockSize, int totalSize)
 {
-	int numFullBlocks = totalSize / blockSize;
-	int leftoverStart = numFullBlocks * blockSize;
-	int	blockNum = index / blockSize;  // which block does this element belong to
+	int numFullBlocks = totalSize / blockSize; // How many full blocks are there.
+	int leftoverStart = numFullBlocks * blockSize; // At which pos does leftover numbers start.
+	int	blockNum = index / blockSize;  // Which block does this current number belong to.
 
 	// leftover -> not main chain
 	if (index >= leftoverStart)
-	{
-		//std::cout << "Blocknum in organizeChains() leftover chain: " << blockNum << std::endl;
 		return 2;
-	}
 
 	// First block (b1) always goes to main chain
 	if (blockNum == 0)
-	{
-		//std::cout << "Blocknum in organizeChains() main chain: " << blockNum << std::endl;
 		return 0;
-	}
 	
 	// main chain: odd-numbered blocks (a-blocks)
 	if (blockNum % 2 != 0)
-	{
-		//std::cout << "Blocknum in organizeChains() main chain: " << blockNum << std::endl;
 		return 0;
-	}
 
-	//std::cout << "Blocknum in organizeChains() pending chain: " << blockNum << std::endl;
-	return 1;	// pending: all remaning b blocks (b2, b3, etc)
+	// pending: all remaning b blocks (b2, b3, etc)
+	return 1;
 }

@@ -1,6 +1,12 @@
 #include "PmergeMe.hpp"
 
 /*
+	Notes to self:
+	- Implement deque.
+	- Calculate how many operations are allowed (and if I am within the limit).
+*/
+
+/*
 ====== CONSTRUCTORS AND DESTRUCTOR =======
 */
 
@@ -24,65 +30,24 @@ PmergeMe::~PmergeMe() {}
 */
 
 /*
-	1. Stores input.
-	2. If only one value in input -> there is nothing to sort.
-	3. Sort part 1: recursively making 'a' and 'b' blocks.
-	4. For each recursion level done:
-		- Sort part 2: sort into main, pending and leftover chain.
-		- Sort part 3: insert pending into main using the Jacobsthal sequence to determine order.
-
+	Generating the Jacobsthal sequence based on how many blocks
+	we have.
+	For two blocks -> J[0] == 3
+	For four blocks -> J[0] == 3, J[1] == 5
+	And so forth.
 */
-void PmergeMe::mergeInsertSortVector(int argc, char **argv, int& numCmpVec)
+std::vector<size_t> PmergeMe::jacobsthalIndices(size_t n)
 {
-	// 1. Store input in vector
-	storeInputVec(argc, argv, vec);
+    std::vector<size_t> J;
+    size_t j0 = 1, j1 = 3;
 
-	// 2. If true, there is nothing to sort
-	if (vec.size() <= 1)
-		return;
-
-	// 3. Sort part 1
-	DBG(debugPrintRecursionStart(vec)); // DEBUG
-	int recLvl = mergeInsertSortVectorRecursive(vec, 1, numCmpVec);
-	DBG(debugPrintRecursionEnd(vec, vec)); // DEBUG
-
-	std::vector<int> mainChain;
-	std::vector<int> pending;
-	std::vector<int> leftover;
-
-	// 5. Sort part 2 and 3
-	while (recLvl > 0) {
-
-		DBG(debugPrintRecursionLevel(recLvl)); // DEBUG
-
-    	int blockSize = 1 << (recLvl - 1);
-
-		for (size_t i = 0; i < vec.size(); i++)
-		{
-			int chain = organizeChains(i, blockSize, vec.size());
-			if (chain == 0)
-				mainChain.push_back(vec[i]);
-			else if (chain == 1)
-				pending.push_back(vec[i]);
-			else
-				leftover.push_back(vec[i]);
-		}
-
-		DBG(debugPrintMainPendingLeftover(mainChain, pending, leftover)); // DEBUG
-	
-		if (!pending.empty())
-			numCmpVec += insertPendingIntoMain(mainChain, pending, blockSize); // Insert pending into main chain.
-		if (!leftover.empty())
-			mainChain.insert(mainChain.end(), leftover.begin(), leftover.end()); // Append leftovers to main chain.
-	
-		vec = mainChain; // Reassign vec
-
-		DBG(debugPrintMainAfterInsertion(vec)); // DEBUG
-
-		mainChain.clear(); pending.clear(); leftover.clear(); // Clear contents each round.
-    	recLvl--; // Go down one recursion level.
-	}
-
+    while (j1 <= n) {
+        J.push_back(j1);
+        size_t next = j1 + 2 * j0;
+        j0 = j1;
+        j1 = next;
+    }
+    return J;
 }
 
 /*
@@ -290,24 +255,64 @@ int PmergeMe::mergeInsertSortVectorRecursive(std::vector<int> &tmp, int recursio
 }
 
 /*
-	Generating the Jacobsthal sequence based on how many blocks
-	we have.
-	For two blocks -> J[0] == 3
-	For four blocks -> J[0] == 3, J[1] == 5
-	And so forth.
-*/
-std::vector<size_t> PmergeMe::jacobsthalIndices(size_t n)
-{
-    std::vector<size_t> J;
-    size_t j0 = 1, j1 = 3;
+	1. Stores input.
+	2. If only one value in input -> there is nothing to sort.
+	3. Sort part 1: recursively making 'a' and 'b' blocks.
+	4. For each recursion level done:
+		- Sort part 2: sort into main, pending and leftover chain.
+		- Sort part 3: insert pending into main using the Jacobsthal sequence to determine order.
 
-    while (j1 <= n) {
-        J.push_back(j1);
-        size_t next = j1 + 2 * j0;
-        j0 = j1;
-        j1 = next;
-    }
-    return J;
+*/
+void PmergeMe::mergeInsertSortVector(int argc, char **argv, int& numCmpVec)
+{
+	// 1. Store input in vector
+	storeInputVec(argc, argv, vec);
+
+	// 2. If true, there is nothing to sort
+	if (vec.size() <= 1)
+		return;
+
+	// 3. Sort part 1
+	DBG(debugPrintRecursionStart(vec)); // DEBUG
+	int recLvl = mergeInsertSortVectorRecursive(vec, 1, numCmpVec);
+	DBG(debugPrintRecursionEnd(vec, vec)); // DEBUG
+
+	std::vector<int> mainChain;
+	std::vector<int> pending;
+	std::vector<int> leftover;
+
+	// 5. Sort part 2 and 3
+	while (recLvl > 0) {
+
+		DBG(debugPrintRecursionLevel(recLvl)); // DEBUG
+
+    	int blockSize = 1 << (recLvl - 1);
+
+		for (size_t i = 0; i < vec.size(); i++)
+		{
+			int chain = organizeChains(i, blockSize, vec.size());
+			if (chain == 0)
+				mainChain.push_back(vec[i]);
+			else if (chain == 1)
+				pending.push_back(vec[i]);
+			else
+				leftover.push_back(vec[i]);
+		}
+
+		DBG(debugPrintMainPendingLeftover(mainChain, pending, leftover)); // DEBUG
+	
+		if (!pending.empty())
+			numCmpVec += insertPendingIntoMain(mainChain, pending, blockSize); // Insert pending into main chain.
+		if (!leftover.empty())
+			mainChain.insert(mainChain.end(), leftover.begin(), leftover.end()); // Append leftovers to main chain.
+	
+		vec = mainChain; // Reassign vec
+
+		DBG(debugPrintMainAfterInsertion(vec)); // DEBUG
+
+		mainChain.clear(); pending.clear(); leftover.clear(); // Clear contents each round.
+    	recLvl--; // Go down one recursion level.
+	}
 }
 
 /*

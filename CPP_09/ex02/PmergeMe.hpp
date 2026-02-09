@@ -12,21 +12,21 @@
 # include "PmergeMeUtils.hpp"
 
 class	PmergeMe {
+
 	private:
 		// Containers
 		std::deque<int> deq;
 		std::vector<int> vec;
 
-		// Sorting
-		void				mergeInsertSortVector(int argc, char **argv, int& numCmpVec);
-
 		// Sorting -> utils
-		int					mergeInsertSortVectorRecursive(std::vector<int> &mainChain, int recursionLvl, int& nmbCmpVec);
 		std::vector<size_t>	jacobsthalIndices(size_t n);
-		int					insertPendingIntoMain(std::vector<int>& mainChain, std::vector<int>& pending, int blockSize);
 		int					doInsertion(std::vector<int>& mainChain, std::vector<int>& pending, int blockSize, int k);
 		int					setInsertionOrder(std::vector<int>& mainChain, std::vector<int>& pending, std::vector<size_t>& jacSequence, int blockSize, int extraBlocksOverJacobsthal);
+		int					insertPendingIntoMain(std::vector<int>& mainChain, std::vector<int>& pending, int blockSize);
+		int					mergeInsertSortVectorRecursive(std::vector<int> &mainChain, int recursionLvl, int& nmbCmpVec);
 
+		// Sorting
+		void				mergeInsertSortVector(int argc, char **argv, int& numCmpVec);
 
 	public:
 		// Main entrypoint
