@@ -25,6 +25,7 @@ class	PmergeMe {
 		std::vector<size_t>	jacobsthalIndices(size_t n);
 		int					insertPendingIntoMain(std::vector<int>& mainChain, std::vector<int>& pending, int blockSize);
 		int					doInsertion(std::vector<int>& mainChain, std::vector<int>& pending, int blockSize, int k);
+		int					setInsertionOrder(std::vector<int>& mainChain, std::vector<int>& pending, std::vector<size_t>& jacSequence, int blockSize, int extraBlocksOverJacobsthal);
 
 
 	public:

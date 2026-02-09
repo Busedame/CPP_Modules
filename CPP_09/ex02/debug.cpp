@@ -47,3 +47,49 @@ void	debugPrintWinnerAndLoser(std::vector<int>& vec, const int winner, const int
 	std::cout << std::endl;
 	std::cout << std::endl;
 }
+
+void	debugPrintCurrentJacobsthal(std::vector<int>& pending, int k, int blockId, int jacPairStart, int jacPairEnd)
+{
+	std::cout << "Current Jacobsthal: " << k << std::endl;
+	std::cout << "At which pos does block b" << blockId + 2 << " start in pending?: " << jacPairStart << std::endl;
+	std::cout << "At which pos does block b" << blockId + 2 << " end in pending?: " << jacPairEnd << std::endl;
+	std::cout << "Which (last) value does block b" << blockId + 2 << " have in pending?: " << pending[jacPairEnd] << std::endl;
+	std::cout << std::endl;
+}
+
+void	debugPrintMainPendingLeftover(std::vector<int>& mainChain, std::vector<int>& pending, std::vector<int>& leftover)
+{
+	std::cout << "Main: " << std::endl;
+	for (long unsigned int i = 0; i < mainChain.size(); i++){
+		std::cout << mainChain[i] << " ";
+	}
+	std::cout << std::endl;
+
+	std::cout << "Pending: " << std::endl;
+	for (long unsigned int i = 0; i < pending.size(); i++){
+		std::cout << pending[i] << " ";
+	}
+	std::cout << std::endl;
+
+	std::cout << "Leftovers: " << std::endl;
+	for (long unsigned int i = 0; i < leftover.size(); i++){
+		std::cout << leftover[i] << " ";
+	}
+	std::cout << std::endl;
+}
+
+void	debugPrintMainAfterInsertion(std::vector<int>& vec)
+{
+	std::cout << "Vector after insertion: " << std::endl;
+	for (long unsigned int i = 0; i < vec.size(); i++){
+		std::cout << vec[i] << " ";
+	}
+	std::cout << std::endl;
+	std::cout << std::endl;
+}
+
+void	debugPrintRecursionLevel(int recLvl)
+{
+	std::cout << "RECURSION LVL: " << recLvl << std::endl;
+	std::cout << std::endl;
+}
