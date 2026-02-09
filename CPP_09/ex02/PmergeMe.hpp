@@ -22,9 +22,9 @@ class	PmergeMe {
 
 		// Sorting -> utils
 		int					mergeInsertSortVectorRecursive(std::vector<int> &mainChain, int recursionLvl, int& nmbCmpVec);
-		void				insertIntoVector(std::vector<int> &sorted, int value);
 		std::vector<size_t>	jacobsthalIndices(size_t n);
-		void				insertPendingIntoMain(std::vector<int>& mainChain, std::vector<int>& pending, int blockSize);
+		int					insertPendingIntoMain(std::vector<int>& mainChain, std::vector<int>& pending, int blockSize);
+		int					doInsertion(std::vector<int>& mainChain, std::vector<int>& pending, int blockSize, int k);
 
 
 	public:
