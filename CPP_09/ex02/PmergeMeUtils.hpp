@@ -5,6 +5,7 @@
 # include <deque>
 # include <algorithm>
 # include <climits>
+# include <cmath>
 
 // Printing
 	void	printVec(std::vector<int>& vector);
@@ -16,9 +17,13 @@
 
 // Sorting utils
 	int		organizeChains(int index, int blockSize, int totalSize);
+	int		organizeOriginalChains(int index, int blockSize, int totalSize);
 
 // Parse and store input
 	void	storeInputVec(int argc, char **argv, std::vector<int>& vec);
 	void	storeInputDeq(int argc, char **argv, std::deque<int>& deq);
+
+// Comparisons
+	int		maxComparisonsFJ(int n);
 
 #endif

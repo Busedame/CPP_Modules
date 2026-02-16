@@ -1,8 +1,9 @@
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -g -DDEBUG
+CFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 OPTIONS = -c
 SRC =	main.cpp \
-		PmergeMe.cpp \
+		PmergeMeVec.cpp \
+		PmergeMeDeq.cpp \
 		debug.cpp \
 		PmergeMeUtils.cpp
 NAME = PmergeMe

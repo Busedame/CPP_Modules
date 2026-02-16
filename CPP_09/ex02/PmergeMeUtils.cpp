@@ -104,3 +104,35 @@ int	organizeChains(int index, int blockSize, int totalSize)
 	// pending: all remaning b blocks (b2, b3, etc)
 	return 1;
 }
+
+int	organizeOriginalChains(int index, int blockSize, int totalSize)
+{
+	int numFullBlocks = totalSize / blockSize; // How many full blocks are there.
+	int leftoverStart = numFullBlocks * blockSize; // At which pos does leftover numbers start.
+	int	blockNum = index / blockSize;  // Which block does this current number belong to.
+
+	// leftover -> not main chain
+	if (index >= leftoverStart)
+		return 2;
+
+	// main chain: odd-numbered blocks (a-blocks)
+	if (blockNum % 2 != 0)
+		return 0;
+
+	// pending: all remaning b blocks (b2, b3, etc)
+	return 1;
+}
+
+int	maxComparisonsFJ(int n)
+{
+	int	sum = 0;
+
+	for (int k = 1; k <= n; ++k)
+	{
+		double	value = (3.0 / 4.0) * k;
+		sum += static_cast<int>(ceil(log2(value)));
+	}
+
+	return sum;
+}
+
