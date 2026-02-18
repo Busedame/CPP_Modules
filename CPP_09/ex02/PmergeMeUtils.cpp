@@ -4,7 +4,7 @@
 ====== PRINTING =======
 */
 
-void printVec(std::vector<int>& vector)
+void printVec(std::vector<int> &vector)
 {
 	std::cout << "After:\t";
 	for (long unsigned int i = 0; i < vector.size(); i++)
@@ -12,7 +12,7 @@ void printVec(std::vector<int>& vector)
 	std::cout << std::endl;
 }
 
-void printDeq(std::deque<int>& deque)
+void printDeq(std::deque<int> &deque)
 {
 	std::cout << "After:\t";
 	for (long unsigned int i = 0; i < deque.size(); i++)
@@ -34,46 +34,51 @@ void printUnsorted(int argc, char **argv)
 
 int parseInput(int argc, char **argv)
 {
-    std::vector<int> tmp;
-    for (int arg = 1; arg < argc; arg++) {
-        char* str = argv[arg];
+	std::vector<int> tmp;
+	for (int arg = 1; arg < argc; arg++)
+	{
+		char *str = argv[arg];
 
-        for (int i = 0; str[i] != '\0'; i++) {
-            if (str[i] < '0' || str[i] > '9') {
-                std::cerr << "Error" << std::endl;
-                return 1;
-            }
-        }
+		for (int i = 0; str[i] != '\0'; i++)
+		{
+			if (str[i] < '0' || str[i] > '9')
+			{
+				std::cerr << "Error" << std::endl;
+				return 1;
+			}
+		}
 
-        long l = atol(str);
-        if (l > INT_MAX || l < INT_MIN) {
-            std::cerr << "Error" << std::endl;
-            return 1;
-        }
+		long l = atol(str);
+		if (l > INT_MAX || l < INT_MIN)
+		{
+			std::cerr << "Error" << std::endl;
+			return 1;
+		}
 
-        int num = static_cast<int>(l);
+		int num = static_cast<int>(l);
 
-        if (std::find(tmp.begin(), tmp.end(), num) != tmp.end()) {
-            std::cerr << "Error" << std::endl;
-            return 1;
-        }
+		if (std::find(tmp.begin(), tmp.end(), num) != tmp.end())
+		{
+			std::cerr << "Error" << std::endl;
+			return 1;
+		}
 
-        tmp.push_back(num);
-    }
-    return 0;
+		tmp.push_back(num);
+	}
+	return 0;
 }
 
 /*
 ====== STORE INPUT =======
 */
 
-void	storeInputVec(int argc, char **argv, std::vector<int>& vec)
+void storeInputVec(int argc, char **argv, std::vector<int> &vec)
 {
 	for (int i = 1; i < argc; i++)
 		vec.push_back(std::atoi(argv[i]));
 }
 
-void	storeInputDeq(int argc, char **argv, std::deque<int>& deq)
+void storeInputDeq(int argc, char **argv, std::deque<int> &deq)
 {
 	for (int i = 1; i < argc; i++)
 		deq.push_back(std::atoi(argv[i]));
@@ -83,11 +88,11 @@ void	storeInputDeq(int argc, char **argv, std::deque<int>& deq)
 ====== SORTING UTILS =======
 */
 
-int	organizeChains(int index, int blockSize, int totalSize)
+int organizeChains(int index, int blockSize, int totalSize)
 {
-	int numFullBlocks = totalSize / blockSize; // How many full blocks are there.
+	int numFullBlocks = totalSize / blockSize;	   // How many full blocks are there.
 	int leftoverStart = numFullBlocks * blockSize; // At which pos does leftover numbers start.
-	int	blockNum = index / blockSize;  // Which block does this current number belong to.
+	int blockNum = index / blockSize;			   // Which block does this current number belong to.
 
 	// leftover -> not main chain
 	if (index >= leftoverStart)
@@ -101,34 +106,16 @@ int	organizeChains(int index, int blockSize, int totalSize)
 	return 1;
 }
 
-int	organizeOriginalChains(int index, int blockSize, int totalSize)
+// Calculates max amount of comparisons for n numbers
+int maxComparisonsFJ(int n)
 {
-	int numFullBlocks = totalSize / blockSize; // How many full blocks are there.
-	int leftoverStart = numFullBlocks * blockSize; // At which pos does leftover numbers start.
-	int	blockNum = index / blockSize;  // Which block does this current number belong to.
-
-	// leftover -> not main chain
-	if (index >= leftoverStart)
-		return 2;
-
-	// main chain: odd-numbered blocks (a-blocks)
-	if (blockNum % 2 != 0)
-		return 0;
-
-	// pending: all remaning b blocks (b2, b3, etc)
-	return 1;
-}
-
-int	maxComparisonsFJ(int n)
-{
-	int	sum = 0;
+	int sum = 0;
 
 	for (int k = 1; k <= n; ++k)
 	{
-		double	value = (3.0 / 4.0) * k;
+		double value = (3.0 / 4.0) * k;
 		sum += static_cast<int>(ceil(log2(value)));
 	}
 
 	return sum;
 }
-

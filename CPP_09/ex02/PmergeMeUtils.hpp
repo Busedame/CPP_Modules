@@ -1,29 +1,28 @@
 #ifndef PMERGEMEUTILS_HPP
-# define PMERGEMEUTILS_HPP
-# include <iostream>
-# include <vector>
-# include <deque>
-# include <algorithm>
-# include <climits>
-# include <cmath>
+#define PMERGEMEUTILS_HPP
+#include <iostream>
+#include <vector>
+#include <deque>
+#include <algorithm>
+#include <climits>
+#include <cmath>
 
 // Printing
-	void	printVec(std::vector<int>& vector);
-	void	printDeq(std::deque<int>& deque);
-	void	printUnsorted(int argc, char **argv);
+void printVec(std::vector<int> &vector);
+void printDeq(std::deque<int> &deque);
+void printUnsorted(int argc, char **argv);
 
 // Parsing
-	int		parseInput(int argc, char **argv);
+int parseInput(int argc, char **argv);
 
 // Sorting utils
-	int		organizeChains(int index, int blockSize, int totalSize);
-	int		organizeOriginalChains(int index, int blockSize, int totalSize);
+int organizeChains(int index, int blockSize, int totalSize);
 
 // Parse and store input
-	void	storeInputVec(int argc, char **argv, std::vector<int>& vec);
-	void	storeInputDeq(int argc, char **argv, std::deque<int>& deq);
+void storeInputVec(int argc, char **argv, std::vector<int> &vec);
+void storeInputDeq(int argc, char **argv, std::deque<int> &deq);
 
 // Comparisons
-	int		maxComparisonsFJ(int n);
+int maxComparisonsFJ(int n);
 
 #endif
