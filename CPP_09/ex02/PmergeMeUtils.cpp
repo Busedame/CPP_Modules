@@ -93,10 +93,6 @@ int	organizeChains(int index, int blockSize, int totalSize)
 	if (index >= leftoverStart)
 		return 2;
 
-	// First block (b1) always goes to main chain
-	if (blockNum == 0)
-		return 0;
-	
 	// main chain: odd-numbered blocks (a-blocks)
 	if (blockNum % 2 != 0)
 		return 0;

@@ -42,8 +42,8 @@ int	main(int argc, char **argv)
 		<< " elements with std::deque : " << duration_deq << " us" << std::endl;
 
 	// THIS ONLY WORKS WITHOUT C++ 1998 (checks if it is actually sorted).
-	//bool sorted = std::is_sorted(deq.begin(), deq.end());
-	//std::cout << "Is sorted?: " << sorted << std::endl;
+	bool sorted = std::is_sorted(vec.begin(), vec.end());
+	std::cout << "Is sorted?: " << sorted << std::endl;
 
 	std::cout << "Max comparisons allowed for " << vec.size() << " numbers: " << maxComparisonsFJ(vec.size()) << std::endl;
 	std::cout << "Amount of comparisons made in vector: " << numCmpVec << std::endl;
