@@ -135,10 +135,20 @@ int PmergeMeDeq::doInsertion(std::deque<int> &mainChain, const std::deque<int> p
 	// Figure out how many main blocks we are allowed to compare with based on original main chain.
 	size_t maxMainIndex = findMaxMainIndex(pendingVal, pending, mainChain, originalMain);
 
-	// Only copy the LAST values of each block in mainchain (up until maxMainIndex).
-	// So mainVals becomes a deque of main blocks.
-	for (size_t i = static_cast<size_t>(blockSize) - 1; i <= maxMainIndex; i += static_cast<size_t>(blockSize))
-		mainVals.push_back(mainChain[i]);
+	// If the 'b' block has a partner 'a' block in mainchain.
+	if (static_cast<size_t>(blockEnd) < originalMain.size())
+	{
+		// Ensures we do NOT compare beyond the allowed partner boundary.
+		for (size_t i = static_cast<size_t>(blockSize) - 1; i + static_cast<size_t>(blockSize) <= maxMainIndex; i += static_cast<size_t>(blockSize))
+			mainVals.push_back(mainChain[i]);
+	}
+
+	// If the b block has NO partner in mainchain, we consider the WHOLE mainchain.
+	else
+	{
+		for (size_t i = static_cast<size_t>(blockSize) - 1; i <= mainChain.size() - 1; i += static_cast<size_t>(blockSize))
+			mainVals.push_back(mainChain[i]);
+	}
 
 	// Do binary search to find insertion position
 	int insertBlockIndex = binarySearch(mainVals, pendingVal, cmpCount);
@@ -266,9 +276,9 @@ int PmergeMeDeq::mergeInsertSortDequeRecursive(std::deque<int> &tmp, int recursi
 		int lastFirstBlock = i + blockSize - 1;
 		int lastSecondBlock = i + 2 * blockSize - 1;
 
+		nmbCmpdeq++;
 		if (tmp[lastFirstBlock] > tmp[lastSecondBlock])
 		{
-			nmbCmpdeq++;
 			std::swap_ranges(tmp.begin() + i,
 							 tmp.begin() + i + blockSize,
 							 tmp.begin() + i + blockSize);

@@ -1,5 +1,5 @@
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -g -std=c++98
+CFLAGS = -Wall -Wextra -Werror -g
 OPTIONS = -c
 SRC =	main.cpp \
 		PmergeMeVec.cpp \

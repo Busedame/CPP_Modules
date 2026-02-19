@@ -46,9 +46,9 @@ int main(int argc, char **argv)
 	// bool sorted = std::is_sorted(vec.begin(), vec.end());
 	// std::cout << "Is sorted?: " << sorted << std::endl;
 
-	std::cout << "Max comparisons allowed for " << vec.size() << " numbers: " << maxComparisonsFJ(vec.size()) << std::endl;
-	std::cout << "Amount of comparisons made in vector: " << numCmpVec << std::endl;
-	std::cout << "Amount of comparisons made in deque: " << numCmpDeq << std::endl;
+	// std::cout << "Max comparisons allowed for " << vec.size() << " numbers: " << maxComparisonsFJ(vec.size()) << std::endl;
+	// std::cout << "Amount of comparisons made in vector: " << numCmpVec << std::endl;
+	// std::cout << "Amount of comparisons made in deque: " << numCmpDeq << std::endl;
 
 	return 0;
 }
